@@ -1,0 +1,26 @@
+h1 {
+    font-family: sans-serif;
+}
+
+#main-menu {
+    list-style-type: none;
+    padding: 20px;
+}
+
+#main-menu li {
+    padding: 8px;
+}
+
+#container {
+    display: flex;
+    flex-direction: row;
+    margin-top: 48px;
+}
+
+#simulator-stage {
+    padding: 0 48px 0 48px;
+}
+
+#score {
+    font-family: sans-serif;
+}

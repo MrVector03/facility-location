@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/konva@9/konva.min.js"></script>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <h1>Facility Location</h1>
+    <div id="container">
+        <div id="simulator-stage"></div>
+        <h2 id="score">Covered points: 0</h2>
+    </div>
+    <ul id="main-menu">
+        <li>
+            <label for="num-points">
+                <input id="num-points" type="number" placeholder="number of points">
+            </label>
+        </li>
+        <li>
+            <button id="scatter-points">Scatter points</button>
+        </li>
+        <li>
+            <button id="clear-points">Delete all points</button>
+        </li>
+        <li>
+            <button id="optimize-button">Optimize</button>
+        </li>
+    </ul>
+
+
+    <script type="module" src="../script/script.js"></script>
+</body>
+</html>
