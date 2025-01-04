@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Factory location</title>
     <script src="https://unpkg.com/konva@9/konva.min.js"></script>
     <link rel="stylesheet" href="../css/style.css">
 </head>
@@ -11,26 +11,43 @@
     <h1>Facility Location</h1>
     <div id="container">
         <div id="simulator-stage"></div>
-        <h2 id="score">Covered points: 0</h2>
+        <div id="main-menu">
+            <h2 id="score">Maximum points covered: ?</h2>
+            <h2 id="manual-score">Manually covered points: 0</h2>
+            <ul>
+                <li>
+                    <label for="num-points">
+                        <input id="num-points" type="number" placeholder="number of points">
+                    </label>
+                </li>
+                <li>
+                    <button id="scatter-points">Scatter points</button>
+                </li>
+                <li>
+                    <button id="clear-points">Delete all points</button>
+                </li>
+                <li>
+                    <button id="optimize-button">Optimize</button>
+                </li>
+                <li>
+                    <div id="manual-choices">
+                        <div>
+                            <input type="radio" name="manual_choices" id="insert-points-manual">
+                            <label for="insert-points-manual">Manual point insert mode</label>
+                        </div>
+                        <div>
+                            <input type="radio" name="manual_choices" id="remove-points-manual">
+                            <label for="remove-points-manual">Manual point delete mode</label>
+                        </div>
+                        <div>
+                            <input type="radio" name="manual_choices" id="drag-disc-manual">
+                            <label for="drag-disc-manual">Manual disc drag mode</label>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
     </div>
-    <ul id="main-menu">
-        <li>
-            <label for="num-points">
-                <input id="num-points" type="number" placeholder="number of points">
-            </label>
-        </li>
-        <li>
-            <button id="scatter-points">Scatter points</button>
-        </li>
-        <li>
-            <button id="clear-points">Delete all points</button>
-        </li>
-        <li>
-            <button id="optimize-button">Optimize</button>
-        </li>
-    </ul>
-
-
     <script type="module" src="../script/script.js"></script>
 </body>
 </html>

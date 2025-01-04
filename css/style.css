@@ -2,13 +2,13 @@ h1 {
     font-family: sans-serif;
 }
 
-#main-menu {
+#main-menu ul {
     list-style-type: none;
-    padding: 20px;
+    padding: 0 20px 0 0;
 }
 
 #main-menu li {
-    padding: 8px;
+    padding: 16px 8px 0 0;
 }
 
 #container {
@@ -21,6 +21,12 @@ h1 {
     padding: 0 48px 0 48px;
 }
 
-#score {
+#score, #manual-score {
     font-family: sans-serif;
+}
+
+#manual-choices {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
