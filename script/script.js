@@ -378,5 +378,26 @@ stage.on('mouseup', () => {
     master.masterDraw();
 });
 
+const slider = document.getElementById('radius');
+const input = document.getElementById('radius-manual');
+
+slider.addEventListener('input', (e) => {
+    const value = e.target.value;
+    master.discRadius = value;
+    input.value = value;
+    master.masterDraw();
+});
+
+input.addEventListener('input', (e) => {
+    const value = Number(e.target.value);
+    if (value < 1 || value > 250) {
+        // Optional: Reset to valid range if out of bounds
+        input.value = value < 1 ? 1 : 250;
+        return;
+    }
+    master.discRadius = value;
+    slider.value = value;
+    master.masterDraw();
+});
 
 master.masterDraw();

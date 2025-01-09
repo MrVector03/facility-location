@@ -8,7 +8,10 @@
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-    <h1>Facility Location</h1>
+    <div id="top-banner">
+        <h1>Facility Location</h1>
+        <p>Click on the map to add points. Click on a point to remove it. Drag the disc to move it.</p>
+    </div>
     <div id="container">
         <div id="simulator-stage"></div>
         <div id="main-menu">
@@ -31,6 +34,11 @@
                 </li>
                 <li>
                     <div id="manual-choices">
+                        <div id="radius-slider">
+                            <label for="radius">Radius:</label>
+                            <input id="radius" type="range" min="1" max="250" value="50">
+                            <input id="radius-manual" min="1" max="250" type="number" value="50">
+                        </div>
                         <div>
                             <input type="radio" name="manual_choices" id="insert-points-manual">
                             <label for="insert-points-manual">Manual point insert mode</label>

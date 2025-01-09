@@ -1,5 +1,37 @@
+#top-banner {
+    background-color: #000;
+    color: #fff;
+    padding: 16px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+}
+
 h1 {
     font-family: sans-serif;
+    color: #fff;
+}
+
+p {
+    font-family: sans-serif;
+}
+
+label {
+    font-family: sans-serif;
+}
+
+input {
+    font-family: sans-serif;
+}
+
+#container {
+    margin-top: 64px; /* Adjust this value based on the height of the top banner */
+}
+
+#main-menu {
+    margin-top: 150px;
 }
 
 #main-menu ul {
@@ -19,6 +51,7 @@ h1 {
 
 #simulator-stage {
     padding: 0 48px 0 48px;
+    margin-top: 150px;
 }
 
 #score, #manual-score {
@@ -29,4 +62,12 @@ h1 {
     display: flex;
     flex-direction: column;
     gap: 10px;
+}
+
+#radius-slider {
+    display: block;
+}
+
+#radius-manual {
+    width: 48px;
 }
