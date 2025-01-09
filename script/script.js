@@ -41,7 +41,18 @@ const manualDragDisc = new Konva.Circle({
 class Painters {
     points = [];
     distances = new Array(MAX_POINTS).fill(0).map(() => new Array(MAX_POINTS).fill(0));
-    temporaryDisc = null; /// TODO: For algorithm animations
+    temporaryDisc = new Konva.Circle({
+        x: -100,
+        y: -100,
+        radius: 50,
+        fill: "rgba(0, 0, 255, 0.3)",
+    });
+    masterDisc = new Konva.Circle({
+        x: -100,
+        y: -100,
+        radius: 50,
+        fill: "rgba(0, 255, 0, 0.3)",
+    });
     discRadius = 50;
     discX = -100;
     discY = -100;
@@ -61,12 +72,12 @@ class Painters {
             layer.add(circle);
         });
 
-        layer.add(new Konva.Circle({
-            x: this.discX,
-            y: this.discY,
-            radius: this.discRadius,
-            fill: "rgba(0, 255, 0, 0.3)"
-        }))
+        // layer.add(new Konva.Circle({
+        //     x: this.discX,
+        //     y: this.discY,
+        //     radius: this.discRadius,
+        //     fill: "rgba(0, 255, 0, 0.3)"
+        // }))
 
         //layer.add(this.finalDisc);
         layer.add(border);
@@ -167,7 +178,7 @@ function scatterPoints(numberOfPoints) {
     master.masterDraw();
 }
 
-function getPointsInside(i, r, n) {
+function getPointsInside(i, r, n, callback) {
     let angles = [];
     const currX = master.points[i].x;
     const currY = master.points[i].y;
@@ -190,7 +201,7 @@ function getPointsInside(i, r, n) {
 
     function animateStep() {
         if (idx >= angles.length) {
-            //console.log("Completed processing for this point.");
+            if (callback) callback();
             return;
         }
 
@@ -203,16 +214,34 @@ function getPointsInside(i, r, n) {
 
         if (count > master.masterCount) {
             master.masterCount = count;
-            master.discX = tmpX;
-            master.discY = tmpY;
+
+            master.masterDisc.setAttrs({
+                x: tmpX,
+                y: tmpY,
+                radius: master.discRadius,
+            });
+
         }
 
-        //master.drawTemporary(tmpX, tmpY);
-        master.masterDraw();
+        master.temporaryDisc.visible(true);
+        master.temporaryDisc.setAttrs({
+            x: tmpX,
+            y: tmpY,
+            radius: master.discRadius,
+        });
+
+        layer.add(master.temporaryDisc);
+        layer.add(master.masterDisc);
+        layer.draw();
         document.getElementById("score").innerHTML = infoText + master.masterCount;
 
-        idx++;
-        setTimeout(animateStep, 500);
+        setTimeout(() => {
+            master.temporaryDisc.visible(false);
+            layer.draw();
+            idx++;
+            animateStep();
+        }, 250); // Move every 250ms
+
     }
 
     animateStep();
@@ -226,11 +255,14 @@ function maxPoints(n, r) {
         }
     }
 
-    for (let i = 0; i < n; i++) {
-        getPointsInside(i, r, n);
+    function processNextPoint(i) {
+        if (i >= n) {
+            return;
+        }
+        getPointsInside(i, r, n, () => processNextPoint(i + 1));
     }
 
-    master.masterDraw();
+    processNextPoint(0);
 }
 
 document.getElementById('optimize-button').addEventListener('click', () => {
