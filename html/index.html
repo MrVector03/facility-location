@@ -25,12 +25,18 @@
                 </li>
                 <li>
                     <button id="scatter-points">Scatter points</button>
-                </li>
-                <li>
                     <button id="clear-points">Delete all points</button>
                 </li>
                 <li>
+                    <label for="simulation-speed">Simulation speed:</label>
+                    <select name="speed" id="simulation-speed">
+                        <option value="slow">Slow</option>
+                        <option value="normal" selected>Normal</option>
+                        <option value="fast">Fast</option>
+                        <option value="instant">Instant</option>
+                    </select>
                     <button id="optimize-button">Optimize</button>
+                    <button id="stop-button">Stop</button>
                 </li>
                 <li>
                     <div id="manual-choices">
@@ -53,6 +59,11 @@
                         </div>
                     </div>
                 </li>
+            </ul>
+        </div>
+        <div id="point-stack">
+            <h2>Points covered:</h2>
+            <ul id="point-list">
             </ul>
         </div>
     </div>

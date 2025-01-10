@@ -54,6 +54,7 @@ class Painters {
         fill: "rgba(0, 255, 0, 0.3)",
     });
     discRadius = 50;
+    speed = 'normal';
     discX = -100;
     discY = -100;
 
@@ -178,10 +179,23 @@ function scatterPoints(numberOfPoints) {
     master.masterDraw();
 }
 
+let isSimulating = false;
+
 function getPointsInside(i, r, n, callback) {
     let angles = [];
     const currX = master.points[i].x;
     const currY = master.points[i].y;
+
+    let wait_time;
+    if (master.speed === 'slow') {
+        wait_time = 500;
+    } else if (master.speed === 'normal') {
+        wait_time = 250;
+    } else if (master.speed === 'fast') {
+        wait_time = 100;
+    } else {
+        wait_time = 0;
+    }
 
     for (let j = 0; j < n; j++) {
         if (i !== j && master.distances[i][j] <= 2 * r) {
@@ -200,7 +214,8 @@ function getPointsInside(i, r, n, callback) {
     let idx = 0;
 
     function animateStep() {
-        if (idx >= angles.length) {
+
+        if (idx >= angles.length || !isSimulating) {
             if (callback) callback();
             return;
         }
@@ -221,6 +236,19 @@ function getPointsInside(i, r, n, callback) {
                 radius: master.discRadius,
             });
 
+            const pointList = document.getElementById('point-list');
+            pointList.innerHTML = '';
+
+            master.points.forEach(point => {
+                const dx = point.x - tmpX;
+                const dy = point.y - tmpY;
+                if ((dx * dx + dy * dy) <= (master.discRadius * master.discRadius) + 0.1) {
+                    const newPoint = document.createElement('li');
+                    newPoint.textContent = `(${point.x.toFixed(2)}, ${point.y.toFixed(2)})`;
+                    pointList.appendChild(newPoint);
+                    console.log("Added: " + point.x + " " + point.y);
+                }
+            });
         }
 
         master.temporaryDisc.visible(true);
@@ -240,7 +268,7 @@ function getPointsInside(i, r, n, callback) {
             layer.draw();
             idx++;
             animateStep();
-        }, 250); // Move every 250ms
+        }, wait_time);
 
     }
 
@@ -266,9 +294,14 @@ function maxPoints(n, r) {
 }
 
 document.getElementById('optimize-button').addEventListener('click', () => {
+    isSimulating = true;
     maxPoints(master.points.length, master.discRadius);
     console.log("RESULT:" + master.masterCount);
     master.masterDraw();
+});
+
+document.getElementById('stop-button').addEventListener('click', () => {
+    isSimulating = false;
 });
 
 document.getElementById("scatter-points").addEventListener('click', () => {
@@ -310,7 +343,6 @@ stage.on('mousedown', (position) => {
         layer.draw();
     }
 });
-
 
 stage.on('mousemove', (e) => {
     let dragManual = document.getElementById('drag-disc-manual');
@@ -385,19 +417,38 @@ slider.addEventListener('input', (e) => {
     const value = e.target.value;
     master.discRadius = value;
     input.value = value;
+    master.masterCount = 0;
+    master.masterDisc.setAttrs({
+        x: -100,
+        y: -100,
+        radius: slider.value,
+    });
+
     master.masterDraw();
 });
 
 input.addEventListener('input', (e) => {
     const value = Number(e.target.value);
     if (value < 1 || value > 250) {
-        // Optional: Reset to valid range if out of bounds
         input.value = value < 1 ? 1 : 250;
         return;
     }
     master.discRadius = value;
     slider.value = value;
+    master.masterCount = 0;
+    master.masterDisc.setAttrs({
+        x: -100,
+        y: -100,
+        radius: slider.value,
+    });
     master.masterDraw();
+
+    // list all layer items
+    maxPoints(master.points.length, master.discRadius);
+});
+
+document.getElementById('simulation-speed').addEventListener('change', (e) => {
+    master.speed = e.target.value;
 });
 
 master.masterDraw();
