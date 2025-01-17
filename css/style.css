@@ -14,6 +14,87 @@ h1 {
     color: #fff;
 }
 
+input[type='number'] {
+    border: black 2px solid;
+    padding: 4px;
+    font-size: large;
+}
+
+select {
+    border: black 2px solid;
+    padding: 4px;
+    font-size: large;
+}
+
+#sim-speed-label {
+    font-family: sans-serif;
+    font-weight: bold;
+    font-size: large;
+}
+
+#radius-label {
+    font-family: sans-serif;
+    font-weight: bold;
+    font-size: large;
+}
+
+input[type='radio'] {
+    margin-right: 8px;
+}
+
+.radio-label-1 {
+    font-family: sans-serif;
+    font-weight: bold;
+    font-size: large;
+}
+button {
+    padding: 8px;
+    border: black 2px solid;
+    font-size: large;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#points-gen button:hover {
+    background-color: #000;
+    color: #fff;
+}
+
+#simulation-control #optimize-button:hover {
+    background-color: darkgreen;
+    color: #fff;
+}
+
+#simulation-control #stop-button:hover {
+    background-color: darkred;
+    color: #fff;
+}
+
+#data-controls {
+    margin-top: 18px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+#save-button {
+    background: rgb(0, 79, 197);
+    color: #fff;
+}
+
+#save-button:hover {
+    background: rgb(0, 79, 197, 0.8);
+}
+
+#load-button {
+    background: rgb(0, 79, 197);
+    color: #fff;
+}
+
+#load-button:hover {
+    background: rgb(0, 79, 197, 0.8);
+}
+
 #point-stack h2 {
     font-family: sans-serif;
     color: #fff;

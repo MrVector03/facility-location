@@ -368,7 +368,6 @@ stage.on('mousemove', (e) => {
         layer.add(manualDragDisc);
         layer.batchDraw();
     } else {
-
         manualDragDisc.visible(false);
 
         if (!selectionRectangle.visible() || !removeManual.checked) return;
@@ -450,5 +449,56 @@ input.addEventListener('input', (e) => {
 document.getElementById('simulation-speed').addEventListener('change', (e) => {
     master.speed = e.target.value;
 });
+
+
+function packAndDownload() {
+    const data = {
+        points: master.points,
+        discRadius: master.discRadius,
+    };
+    const jsonString = JSON.stringify(data);
+    const blob = new Blob([jsonString], {type: 'application/json'});
+    const link = document.createElement('a');
+    link.download = 'fl_data.json';
+    link.href = window.URL.createObjectURL(blob);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+function loadFromFile(file) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        const jsonString = e.target.result;
+        const data = JSON.parse(jsonString);
+        let new_points = [];
+        for (let i = 0; i < data.points.length; i++) {
+            new_points[i] = new Point(data.points[i].x, data.points[i].y);
+        }
+        master.points = new_points;
+        master.discRadius = data.discRadius;
+        document.getElementById('radius-manual').value = master.discRadius;
+        document.getElementById('radius').value = master.discRadius;
+        master.masterCount = 0;
+        master.masterDraw();
+        console.log(master.points);
+    };
+    reader.readAsText(file);
+}
+
+function openFileDialog() {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.json';
+    input.onchange = (e) => {
+        const file = e.target.files[0];
+        loadFromFile(file);
+    };
+    input.click();
+}
+
+document.getElementById('save-button').addEventListener('click', packAndDownload);
+
+document.getElementById('load-button').addEventListener('click', openFileDialog);
 
 master.masterDraw();
